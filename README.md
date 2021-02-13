@@ -25,3 +25,6 @@ Modificar el application.properties con las accesos y/o credenciales correctos p
 host base de base datos -> spring.datasource.url
 usuario   de base datos -> spring.datasource.username
 password  de base datos -> spring.datasource.password
+
+Componentes usados durante el desarrollo:
+<h1> postgres:12.2 </h1>
