@@ -11,15 +11,15 @@ Este API permite:
 3. Traer todos los usuarios que tienen un permiso determinado respecto a un
 álbum específico.
 
-Health check
+<h4>Health check</h4>
 <br>
 http://localhost:8081/wolox-api/actuator/health
 
-Documentación y test de endpoints
+<h4>Documentación y test de endpoints</h4><br>
 <br>
 http://localhost:8081/wolox-api/swagger-ui.html
 
-Base de datos
+<h4>Base de datos</h4><br>
 El archivo para crear la bd en postgres se encuentra en los recuersos del proyecto (bbdd/*.sql).
 
 Modificar el application.properties con las accesos y/o credenciales correctos para la base de datos
