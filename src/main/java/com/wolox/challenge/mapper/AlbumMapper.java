@@ -1,7 +1,6 @@
 package com.wolox.challenge.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.wolox.challenge.domain.Album;

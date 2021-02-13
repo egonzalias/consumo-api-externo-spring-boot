@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wolox.challenge.camel.ApiBuilder;
 import com.wolox.challenge.domain.Album;
 import com.wolox.challenge.domain.AlbumPK;
 import com.wolox.challenge.dto.AlbumDTO;
 import com.wolox.challenge.dto.UserDTO;
+import com.wolox.challenge.exception.GeneralException;
+import com.wolox.challenge.exception.ResourceNotFoundException;
 import com.wolox.challenge.mapper.AlbumMapper;
 import com.wolox.challenge.repository.AlbumRepository;
 import com.wolox.challenge.service.AlbumService;
@@ -49,7 +49,7 @@ public class AlbumServiceImpl implements AlbumService {
 	private final AlbumMapper albumMapper;
 
 	@Override
-	public AlbumDTO registerSharedAlbum(AlbumDTO albumDtoData) {
+	public AlbumDTO registerSharedAlbum(AlbumDTO albumDtoData) throws Exception {
 
 		try {
 			String album_id = "/" + albumDtoData.getAlbum_id();
@@ -62,9 +62,7 @@ public class AlbumServiceImpl implements AlbumService {
 					response = camel.sendRequest(url + users + user_id);
 					if (response != null && !response.isEmpty()) {
 
-						UserDTO userTargetDto = new ObjectMapper()
-								.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-								.readValue(response, UserDTO.class);
+						UserDTO userTargetDto = new ObjectMapper().readValue(response, UserDTO.class);
 
 						if (userTargetDto.getId() != null) {
 							AlbumPK albumPK = new AlbumPK();
@@ -77,70 +75,72 @@ public class AlbumServiceImpl implements AlbumService {
 							albumRepository.saveAndFlush(album);
 						} else {
 							// No existe usuario destino
+							throw new ResourceNotFoundException("El usuario ["+user_id+"] no existe en el API externo.");
 						}
 					} else {
 						// Error respuesta en consulta usuario
+						throw new GeneralException("Error obteniendo informacion de usuarios desde del API externo.");
 					}
 				} else {
 					// No existe album
+					throw new ResourceNotFoundException("El album ["+album_id+"] no existe en el API externo.");
 				}
 			} else {
 				// Error respuesta en consulta album info
+				throw new GeneralException("Error obteniendo informacion de los album desde del API externo.");
 			}
 			// System.out.println(">>"+response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
-		// System.out.println(albumDto.getUser_id());
 		return null;
 	}
 
 	@Override
-	public List<UserDTO> getPermissionsUser(String albumId, String permission) {
+	public List<UserDTO> getPermissionsUser(String albumId, String permission) throws Exception {
 		List<UserDTO> lstUser = new ArrayList<>();
 		try {
 			// TODO Auto-generated method stub
 			List<String> lstIdsUser = new ArrayList<>();
-			List<Album> lstAlbum = new ArrayList<>();
-			String field = "";
-			boolean blState = false;
 
 			if (albumId != null && !albumId.isEmpty()) {
 				if ((permission != null && permission.equalsIgnoreCase(AlbumDTO.READ))
 						|| (permission != null && permission.equalsIgnoreCase(AlbumDTO.WRITE))) {
-					lstIdsUser = albumRepository.getPermissionsUser(albumId, permission);
-					
-					String response = camel.sendRequest(url + users);
-					if (response != null && !response.isEmpty()) {
-						JSONArray jsonArr = new JSONArray(response);
-						
-						for (int i = 0; i < jsonArr.length(); i++)
-				        {
-				            JSONObject jsonObj = jsonArr.getJSONObject(i);
-				            UserDTO userTmp = new UserDTO();
-				            userTmp.setId(String.valueOf(jsonObj.getInt("id")));
-				            userTmp.setName(jsonObj.getString("name"));
-				            userTmp.setUsername(jsonObj.getString("username"));
-				            lstUser.add(userTmp);
-				        }
-						List<String> lstIdsUserTmp = lstIdsUser;	
-						
-						lstUser = lstUser.stream().filter(obj -> lstIdsUserTmp.contains(obj.getId())).collect(Collectors.toList());
+					lstIdsUser = albumRepository.getPermissionsUser(albumId, permission.toUpperCase());
+
+					if(lstIdsUser != null && lstIdsUser.size() >= 1) {
+						String response = camel.sendRequest(url + users);
+						if (response != null && !response.isEmpty()) {
+							JSONArray jsonArr = new JSONArray(response);
+							for (int i = 0; i < jsonArr.length(); i++)
+					        {
+					            UserDTO userTmp =  new ObjectMapper().readValue(jsonArr.getJSONObject(i).toString(), UserDTO.class);
+					            lstUser.add(userTmp);
+					        }
+							List<String> lstIdsUserTmp = lstIdsUser;						
+							lstUser = lstUser.stream().filter(obj -> lstIdsUserTmp.contains(obj.getId())).collect(Collectors.toList());
+						}
+						else {
+							throw new GeneralException("Error obteniendo informacion de usuarios desde del API externo.");
+						}
 					}
-					
-					
+					else {
+						//Album no existe
+						throw new ResourceNotFoundException("El album ["+albumId+"] no existe en la base de datos.");
+					}
+										
 				} else {
 					// permiso no permitido
+					throw new GeneralException("El permiso ["+permission+"] no esta permitido. Intente W o R.");
 				}
 
 			} else {
 				// album erroneo
+				throw new GeneralException("El album ["+albumId+"] nulo o vacion no es valido para la busqueda.");
 			}
 		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.out.println("Error:"+e.getMessage());
+			throw e;
 		}
 		return lstUser;
 	}

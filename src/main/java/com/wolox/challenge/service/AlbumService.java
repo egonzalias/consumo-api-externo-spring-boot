@@ -8,6 +8,6 @@ import com.wolox.challenge.dto.UserDTO;
 
 public interface AlbumService {
 
-	AlbumDTO registerSharedAlbum(AlbumDTO album);
-	List<UserDTO> getPermissionsUser (String albumId, String permission);
+	AlbumDTO registerSharedAlbum(AlbumDTO album) throws Exception;
+	List<UserDTO> getPermissionsUser (String albumId, String permission) throws Exception;
 }

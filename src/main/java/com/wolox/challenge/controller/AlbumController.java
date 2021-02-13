@@ -32,7 +32,7 @@ public class AlbumController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Success"), @ApiResponse(code = 204, message = "No Content"),
 			@ApiResponse(code = 500, message = "Failure") })
 	@PutMapping(value = "/register/shared", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AlbumDTO> registerSharedAlbum(@RequestBody AlbumDTO albumData) {
+	public ResponseEntity<AlbumDTO> registerSharedAlbum(@RequestBody AlbumDTO albumData) throws Exception {
 		albumService.registerSharedAlbum(albumData);
 		return new ResponseEntity<AlbumDTO>(new AlbumDTO(), HttpStatus.OK);
 	}
@@ -41,11 +41,8 @@ public class AlbumController {
 			@ApiResponse(code = 500, message = "Failure") })
 	@GetMapping(value = "/permissions/user")
 	public ResponseEntity<List<UserDTO>> getPermissionsUser(@RequestParam(name = "id", required = true) String id,
-			@RequestParam(name = "permission", required = true) String permission) {
-		
-		//ResponseEntity.o
-		List<UserDTO> lstUsers = albumService.getPermissionsUser(id,permission);
-		
+			@RequestParam(name = "permission", required = true) String permission) throws Exception {
+		List<UserDTO>  lstUsers = albumService.getPermissionsUser(id,permission);
 		return new ResponseEntity<List<UserDTO>>(lstUsers, HttpStatus.OK);
 	}
 }

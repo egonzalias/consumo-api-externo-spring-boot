@@ -11,23 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO implements Serializable{
+public class CompanyDTO implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private String id;
 	private String name;
-    private String username;
-    private String email;
-    private AddressDTO address;
-    private String phone;
-    private String website;
-    /*private String address;
-    private String company;*/
-    private CompanyDTO company;
-
-
+    private String catchPhrase;
+    private String bs;
 }

@@ -2,14 +2,9 @@ package com.wolox.challenge.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Data;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Data
 public class User implements Serializable{
 
 	/**
@@ -18,21 +13,21 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
-    private String username;
+    private String username;	
     private String email;
     private String phone;
     private String website;
     
-    private class address{
+    /*private class Address{
     	private String street;
         private String city;
         private String zipcode;
     }
     
-    private class company{
+    private class Company{
     	private String name;
         private String catchPhrase;
         private String bs;
-    }
+    }*/
     
 }

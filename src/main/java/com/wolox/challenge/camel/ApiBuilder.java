@@ -5,11 +5,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
-import com.wolox.challenge.engine.AlbumInformationProcessor;
 
 @Component
 public class ApiBuilder  {
@@ -43,7 +40,7 @@ public class ApiBuilder  {
 	        }
 	        //Thread.sleep(1000 * 1);
 	    } catch (Exception ex) {
-	        System.out.println("Exception: " + ex);
+	        throw ex;
 	    }finally {
 	    	/*context.stop();
 	    	context.close();*/
