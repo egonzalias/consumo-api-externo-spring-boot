@@ -12,9 +12,11 @@ Este API permite:
 álbum específico.
 
 Health check
+<br>
 http://localhost:8081/wolox-api/actuator/health
 
 Documentación y test de endpoints
+<br>
 http://localhost:8081/wolox-api/swagger-ui.html
 
 Base de datos
@@ -30,5 +32,5 @@ password  de base datos -> spring.datasource.password
 <br>
 
 Componentes usados durante el desarrollo:
-<h2> Docker image postgres:12.2 </h>
-<h2> Spring tool Suite 4 </h>
+<h4> Docker image postgres:12.2 </h4>
+<h4> Spring tool Suite 4 </h4>
