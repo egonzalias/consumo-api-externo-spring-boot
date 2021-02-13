@@ -27,4 +27,5 @@ usuario   de base datos -> spring.datasource.username
 password  de base datos -> spring.datasource.password
 
 Componentes usados durante el desarrollo:
-<h1> postgres:12.2 </h1>
+<h2> Docker image postgres:12.2 </h>
+<h2> Spring tool Suite 4 </h>
