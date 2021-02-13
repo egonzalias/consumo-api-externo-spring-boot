@@ -23,8 +23,11 @@ El archivo para crear la bd en postgres se encuentra en los recuersos del proyec
 Modificar el application.properties con las accesos y/o credenciales correctos para la base de datos
 
 host base de base datos -> spring.datasource.url
+<br>
 usuario   de base datos -> spring.datasource.username
+<br>
 password  de base datos -> spring.datasource.password
+<br>
 
 Componentes usados durante el desarrollo:
 <h2> Docker image postgres:12.2 </h>
