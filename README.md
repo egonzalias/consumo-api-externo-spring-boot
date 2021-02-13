@@ -10,3 +10,18 @@ Este API permite:
 2. Cambiar los permisos de un usuario para un álbum determinado.
 3. Traer todos los usuarios que tienen un permiso determinado respecto a un
 álbum específico.
+
+Health check
+http://localhost:8081/wolox-api/actuator/health
+
+Documentación y test de endpoints
+http://localhost:8081/wolox-api/swagger-ui.html
+
+Base de datos
+El archivo para crear la bd en postgres se encuentra en los recuersos del proyecto (bbdd/*.sql).
+
+Modificar el application.properties con las accesos y/o credenciales correctos para la base de datos
+
+host base de base datos -> spring.datasource.url
+usuario   de base datos -> spring.datasource.username
+password  de base datos -> spring.datasource.password
