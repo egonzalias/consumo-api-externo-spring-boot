@@ -15,7 +15,7 @@ Este API permite:
 <br>
 http://localhost:8081/wolox-api/actuator/health
 
-<h4>Documentación y test de endpoints</h4><br>
+<h4>Documentación y test de endpoints</h4>
 <br>
 http://localhost:8081/wolox-api/swagger-ui.html
 
