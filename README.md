@@ -12,16 +12,14 @@ Este API permite:
 álbum específico.
 
 <h4>Health check</h4>
-<br>
 http://localhost:8081/wolox-api/actuator/health
 
 <h4>Documentación y test de endpoints</h4>
-<br>
 http://localhost:8081/wolox-api/swagger-ui.html
 
 <h4>Base de datos</h4><br>
 El archivo para crear la bd en postgres se encuentra en los recuersos del proyecto (bbdd/*.sql).
-Modificar el application.properties con las accesos y/o credenciales correctos para la base de datos
+Modificar el application.properties con las accesos y/o credenciales correctos para la base de datos:
 
 host base de base datos -> spring.datasource.url
 <br>
