@@ -11,6 +11,9 @@ Este API permite:
 3. Traer todos los usuarios que tienen un permiso determinado respecto a un
 álbum específico.
 
+<h4>Docker</h4>
+una vez compilado el proyecto y generado el jar correctamente, pueden desplegar en un contenedor el proyecto, por defecto en el puerto 8081. Ejecutar "docker build ." en la raiz.
+
 <h4>Health check</h4>
 http://localhost:8081/wolox-api/actuator/health
 
