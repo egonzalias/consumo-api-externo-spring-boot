@@ -12,10 +12,12 @@
 	<groupId>com.wolox</groupId>
 	<artifactId>Challenge</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>Challenge</name>
 	<description>Challenge project for Wolox</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<start-class>com.wolox.challenge.ChallengeApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -144,28 +146,34 @@
 	</dependencies>
 
 	<build>
+		<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 		<pluginManagement>
-			<plugins>
+			<plugins>				
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<configuration>
-						<skip>true</skip>
+						<executable>true</executable>
+						<mainClass>com.wolox.challenge.ChallengeApplication</mainClass>
 					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
-				<plugin> <!-- Build an executable jar -->
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.2.0</version>
-					<configuration>
-						<archive>
-							<manifest>
-								<addClasspath>true</addClasspath>
-								<mainClass>com.wolox.challenge.ChallengeApplication</mainClass>
-							</manifest>
-						</archive>
-					</configuration>
-				</plugin>
+				<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
 			</plugins>
 		</pluginManagement>
 
